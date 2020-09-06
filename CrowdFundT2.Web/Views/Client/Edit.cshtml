@@ -1,0 +1,56 @@
+﻿@model CrowdFundT2.Core.Model.Client
+@{
+    ViewData["Title"] = "Edit";
+
+}
+
+
+@* Update Client *@
+
+<form method="post" class="js-customer-edit-form col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+    <h2 class="form-header ">Edit info</h2>
+    <br />
+    <div class="form-group form-border-control client-form-group">
+        <label for="firstName">First name</label>
+        <input name="@Html.NameFor(m => m.Firstname)" placeholder="Enter your first name"
+               data-val="true" data-val-required="Field required"
+               class="js-firstname form-control" value="@Model.Firstname">
+        @Html.ValidationMessageFor(m => m.Firstname)
+    </div>
+    <input class="js-ClientId" type="hidden" value="@Model.ClientId"/> 
+    <div class="form-group form-border-control client-form-group">
+        <label for="lastName">Last name</label>
+        <input name="@Html.NameFor(m => m.Lastname)" placeholder="Enter your last name"
+               data-val="true" data-val-required="Field required" 
+               class="js-lastname form-control" value="@Model.Lastname">
+        @Html.ValidationMessageFor(m => m.Lastname)
+    </div>
+    <div class="form-group form-border-control client-form-group">
+        <label for="email">Email</label>
+        <input name="@Html.NameFor(m => m.Email)" placeholder="Enter your email"
+               data-val="true" data-val-required="Field required" data-val-email="Field required"
+               class="js-email form-control" value="@Model.Email">
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div class="form-group client-form-group">
+        <label for="phone">Phone</label>
+        <input name="@Html.NameFor(m => m.Phone)" placeholder="Enter your phone"
+               data-val="true" data-val-required="Field required"
+               class="js-phone form-control" value="@Model.Phone">
+        @Html.ValidationMessageFor(m => m.Phone)
+    </div>
+    <div class="form-group form-check client-form-group">
+        <input type="checkbox" class="form-check-input" id="DisableClientCheckBox">
+        <label class="form-check-label" for="exampleCheck1">Disable</label>
+    </div>
+    <button type="button" id="js-submit-customer-edit" class="btn btn-primary">Submit</button>
+
+    <div class="alert alert-success js-success-alert" role="alert">
+        Client was updated successsfully
+    </div>
+
+    <div class="alert alert-danger js-danger-alert" role="alert">
+        Client could not be updated
+    </div>
+
+</form>

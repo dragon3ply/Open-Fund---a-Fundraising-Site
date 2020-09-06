@@ -1,0 +1,48 @@
+﻿@model CrowdFundT2.Core.Model.Project
+@{
+    ViewData["Title"] = "Edit";
+
+}
+
+    <form method="post" class="js-customer-edit-form col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 project-edit-form">
+        <h2>Edit info</h2>
+        <br />
+
+        @* Title *@
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input name="@Html.NameFor(m => m.Title)" placeholder="Enter the project title"
+                   data-val="true" data-val-required="Field required"
+                   class="js-title form-control" value="@Model.Title">
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        <input class="js-ProjectId" type="hidden" value="@Model.ProjectId" />
+        <div class="form-group">
+            <label for="exampleInputDescription1">Description: </label>
+            <input name="@Html.NameFor(m => m.Description)" placeholder="Enter the project description"
+                   data-val="true" data-val-required="Field required"
+                   class="form-control js-Description" value="@Model.Description"
+                   type="text" id="exampleInputDescription1">
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPostStatusUpdates1">PostStatusUpdates address: </label>
+            <input name="@Html.NameFor(m => m.PostStatusUpdates)" placeholder="Enter your PostStatusUpdates"
+                   data-val="true" data-val-required="Field required"
+                   class="form-control js-PostStatusUpdates" value="@Model.PostStatusUpdates"
+                   type="text" id="exampleInputPostStatusUpdates1"
+                   aria-describedby="PostStatusUpdatesHelp">
+            @Html.ValidationMessageFor(m => m.PostStatusUpdates)
+        </div>
+
+        <button type="button" id="js-submit-project-edit" class="btn btn-primary">Submit</button>
+
+    <div class="alert alert-success js-success-alert" role="alert">
+        Project was updated successsfully
+    </div>
+
+    <div class="alert alert-danger js-danger-alert" role="alert">
+        Project could not be updated
+    </div>
+
+    </form>

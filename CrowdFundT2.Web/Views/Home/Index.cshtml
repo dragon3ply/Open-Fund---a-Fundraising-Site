@@ -1,0 +1,151 @@
+﻿@using CrowdFundT2.Core.Model
+@model CfModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Projects photos Not Found!
+    </div>
+    return;
+}
+
+@* HOME PAGE *@
+
+@* Index Projects Carousel *@
+
+<div class=" carousel slide shadow bg-white rounded" data-ride="carousel">
+    <div class="carousel-inner">
+
+        @{var x = Model.Projects.Take(1).SingleOrDefault(); }
+        <div class="carousel-item active">
+            <div class="d-block w-100 main-car-banner" style="background-image: url( @x.Photos );">
+                <div class="carousel-caption d-block">
+                    <h2 style="color:white">@x.Title</h2>
+                    <p style="color:white">@x.Description</p>
+                    <input class="js-ProjectId" type="hidden" value="@x.ProjectId" />
+                    <button class="btn btn-success  mr-sm-1 js-index-car-invest" type="button">Invest</button>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.Projects.Skip(1).Take(2))
+        {
+            <div class="carousel-item">
+                <div class="d-block w-100 main-car-banner" style="background-image: url( @item.Photos );">
+                    <div class="carousel-caption d-block">
+                        <h2 style="color:white">@item.Title</h2>
+                        <p style="color:white">@item.Description</p>
+                        <input class="js-ProjectId" type="hidden" value="@item.ProjectId" />
+                        <button class="btn btn-success  mr-sm-1 js-index-car-invest" type="button">Invest</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@* Popular Projects Slider *@
+
+<div class="shadow bg-white rounded popular-projects-shadow">
+
+    <div class="row">
+        <div class="col-8 popular-projects-col8">
+            Popular Projects
+        </div>
+
+        <div class="col-4 popular-projects-col4">
+            <a class="left-button left-button-pop-proj">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="sr-only text-dark">Previous</span>
+            </a>
+            <a class="right-button right-button-pop-proj">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="">
+
+        <div class="carousel-moving d-block w100p ">
+            @foreach (var item in Model.Projects.OrderByDescending(x => x.Earnings).Take(5))
+            {
+                <div class="d-inline-block popular-project-inline">
+                    <div class="card">
+                        <div class="card-body popular-project-cardbody" style="background-image: url( @item.Photos );">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">@item.Description</p>
+                            <div class="card-style ">
+                                <a href="@Url.Action("Details","Project",new { id=item.ProjectId})" class="btn btn-success">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>
+
+
+@*Angel Investors*@
+
+<section class="text-center mt-14 angel-text">
+    <div class="js-angels-btn angel-style" style=" background-image: url('@Url.Content("~/images/angelsInv.png")')">
+        <h4 class="are-you-an-angel">Are you an Angel?</h4>
+        @*<form action="#" class="form-inline" style="justify-content: center;" method="Post">
+            <button type="button" class="btn mr-sm-1 mb-1 js-angels-btn" style=" background-color: #ff0047; color: white;">Angels</button>
+        </form>*@
+    </div>
+</section>   
+
+
+<div class="js-angels-pop-up" style="">
+    <div class="js-angels-container" style="">
+        <div class="pop-up-styling-1">
+            <div><i class="fa fa-remove js-angels-x-btn pop-up-styling-2"></i></div>
+            <div class="pop-up-styling-3">Angel Investors</div>
+            <div class="pop-up-styling-4">
+
+            </div>
+            @foreach (var item in Model.Client)
+            {
+            <div style="margin:1rem;">
+                <div class="pop-up-styling-5">
+                    @item.Firstname | @item.Lastname
+                </div>
+                <div>Invested amount: @item.InvestedProjects.FirstOrDefault().InvestedAmount €</div>
+            </div>
+                
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@* Subsrcibe Area *@
+
+<section class="text-center mt-3 subscribe-text">
+    <div class="container p-3">
+        <h4>SUBSCRIBE NOW</h4>
+        <form action="#" class="form-inline subscribe-form" method="Post">
+            <input class="form-control form-control-style" type="text" name="text" placeholder="Enter Your Email Address">
+            <button type="button" class="btn mr-sm-1 subscribe-btn">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+
+
+@* for popular projects sliding*@
+@section Scripts{ 
+<script type="text/javascript" src="~/js/sliding_popular_projects.js"></script>
+}

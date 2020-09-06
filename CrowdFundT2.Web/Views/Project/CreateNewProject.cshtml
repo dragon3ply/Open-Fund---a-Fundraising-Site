@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "CreateNewProject";
+
+}
+
+@* Create new Project Form*@
+
+    <form method="post" class="js-customer-edit-form col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+        <h2 class="form-header ">Create New Project</h2>
+        <br />
+
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputTitle1">ClientId: </label>
+            <input name="ClientId" type="text" class="form-control js-ClientId"
+                   id="exampleInputClientId1" placeholder="Enter your ClientId">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputTitle1">Title: </label>
+            <input name="Title" type="text" class="form-control js-Title"
+                   id="exampleInputTitle1" placeholder="Enter the project title">
+        </div>
+        <input class="js-ProjectId" type="hidden" />
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputDescription1">Description: </label>
+            <input name="Description" type="text" class="form-control js-Description"
+                   id="exampleInputDescription1" placeholder="Enter the project description">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputPhotos1">Photos: </label>
+            <input name="Photos" type="text" class="form-control js-Photos"
+                   id="exampleInputPhotos1" placeholder="Enter the project Photos">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputVideos1">Videos: </label>
+            <input name="Videos" type="text" class="form-control js-Videos"
+                   id="exampleInputVideos1" placeholder="Enter the project Videos">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputPostStatusUpdates1">PostStatusUpdates: </label>
+            <input name="PostStatusUpdates" type="text" class="form-control js-PostStatusUpdates"
+                   id="exampleInputPostStatusUpdates1" placeholder="Enter the project PostStatusUpdates">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputCategory1">Category: </label>
+            <input name="Category" type="text" class="form-control js-Category"
+                   id="exampleInputCategory1" placeholder="Enter the project Category">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="exampleInputProjectCost1">ProjectCost: </label>
+            <input name="ProjectCost" type="text" class="form-control js-ProjectCost"
+                   id="exampleInputProjectCost1" placeholder="Enter the project ProjectCost">
+        </div>
+        <div class="form-group form-border-control create-project-form-group">
+            <label for="examplenumberOfPackages">Number Of Packages: </label>
+            <input name="numberOfPackages" type="text" class="form-control js-numberOfPackages"
+                   id="examplenumberOfPackages" placeholder="Enter the number of Project Packages">
+        </div>
+
+        <button type="button" id="js-submit-project-create" class="btn btn-primary">Submit</button>
+
+        <div class="alert alert-success js-success-alert" role="alert">
+            Project was created successsfully
+        </div>
+
+        <div class="alert alert-danger js-danger-alert" role="alert">
+            Project could not be created
+        </div>
+
+    </form>
+

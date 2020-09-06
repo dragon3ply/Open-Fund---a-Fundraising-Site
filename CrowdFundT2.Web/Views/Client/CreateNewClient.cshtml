@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "CreateNewClient";
+
+}
+
+
+@* Create New Client *@
+
+<form method="post" class="js-customer-edit-form col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 custom-create-client-form">
+    <h2 class="form-header ">Create new Client</h2>
+    <br />
+    <div class="form-group form-border-control custom-create-client-form-group">
+        <label for="firstName">First name</label>
+        <input placeholder="Enter your first name"
+               data-val="true" data-val-required="Field required"
+               class="js-firstname form-control">
+    </div>
+    <div class="form-group form-border-control custom-create-client-form-group">
+        <label for="lastName">Last name</label>
+        <input placeholder="Enter your last name"
+               data-val="true" data-val-required="Field required"
+               class="js-lastname form-control">
+    </div>
+    <div class="form-group form-border-control custom-create-client-form-group">
+        <label for="email">Email</label>
+        <input placeholder="Enter your email"
+               data-val="true" data-val-required="Field required" data-val-email="Field required"
+               class="js-email form-control">
+    </div>
+    <div class="form-group custom-create-client-form-group">
+        <label for="phone">Phone</label>
+        <input placeholder="Enter your phone"
+               data-val="true" data-val-required="Field required"
+               class="js-phone form-control">
+    </div>
+
+    <button type="button" id="js-submit-client-create" class="btn btn-primary">Create new Client</button>
+
+    <div class="alert alert-success js-success-alert" role="alert">
+        Client was created successsfully
+    </div>
+
+    <div class="alert alert-danger js-danger-alert" role="alert">
+        Client could not be created
+    </div>
+
+</form>
+
+<style>
+    /* Client/Edit/{Id} */
+
+
+
+    .custom-create-client-form-group {
+        font-weight: 500;
+    }
+</style>

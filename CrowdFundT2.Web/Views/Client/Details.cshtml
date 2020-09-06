@@ -1,0 +1,38 @@
+﻿@model CrowdFundT2.Core.Model.Client
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Client Not Found!
+    </div>
+    return;
+}
+
+
+@* Client Details *@
+
+<div class="card flex-sm-row card-clients-details">
+        <div class="card-header card-client-header">
+            @Model.Firstname @Model.Lastname
+        </div>
+        <div class="card-body">
+            <h6 class="card-title client-card-title ">Email: @Model.Email</h6>
+            <h6 class="card-title client-card-title">Phone: @Model.Phone</h6>
+            <hr />
+            <p class="card-text">Created Projects: @Model.Projects.Count()</p>
+            <p class="card-text">Invested Projects: @Model.InvestedProjects.Count()</p>
+            @{var inp = @Model.InvestedProjects.OrderByDescending(o => o.InvestedAmount).First();}
+            <p class="card-text">Top Invested Project: @inp.ProjectId <br /> Amount: @inp.InvestedAmount €</p>
+            <p class="card-text">Active State: 
+            @if (Model.IsActive) { <i class="fas fa-circle active-circle"></i> }
+            else { <i class="fas fa-circle not-active-circle"></i>  }
+            </p>
+            <p class="card-text">Created: @Model.Created</p>
+            <a href="@Url.Action("Edit", "Client", new { id = Model.ClientId })" class="btn btn-success">Edit</a>
+        </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿@model AddPackageModel
+@{
+    ViewData["Title"] = "AddPackages";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Not Found!
+    </div>
+    return;
+}
+
+@* Add a new Package *@
+
+<input class="js-numberOfPackages" type="hidden" value="@Model.numberOfPackages" />
+<input class="js-projectId" type="hidden" value="@Model.projectId" />
+<div class="row" style="justify-content: center;">
+    <form>
+        @for (int i = 1; i <= Model.numberOfPackages; i++)
+        {
+            <div style=" box-shadow: 0rem 1rem 0.8rem rgba(0,0,0,.15) !important; padding: 1rem; margin: 1rem; border-radius: 2rem; font-family: monospace; width: 22rem;">
+                <div class="form-group">
+                    <div style=" text-align: center; margin: 1rem; font-size: 20px;">Package @i</div>
+                    <label for="exampleInputDescription1">@i</label>
+                    <label for="exampleInputDescription1">Package Description:</label>
+                    <input type="text" class="form-control descriptionpack_@i" id="descriptionPack_@i" aria-describedby="emailHelp">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputReward1">Reward:</label>
+                    <input type="text" class="form-control rewardpack_@i" id="rewardPack_@i">
+                    <small id="emailHelp" class="form-text text-muted">Add the package price here.</small>
+                </div>
+            </div>
+        }
+    </form>
+</div>
+<div style="display: flex; justify-content: center;">
+    <button style=" box-shadow: 0rem 1rem 0.8rem rgba(0,0,0,.15) !important;" type="button" class="btn btn-outline-success js-submit-package-create">Add Packages</button>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-success js-success-alert m-1" style="width:22rem; text-align:center;" role="alert">
+        Packages was created successsfully
+    </div>
+
+    <div class="alert alert-danger js-danger-alert m-1" style="width:22rem; text-align:center;" role="alert">
+        Packages could not be created
+    </div>
+</div>
+

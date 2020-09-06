@@ -1,0 +1,97 @@
+﻿@using CrowdFundT2.Core.Model
+
+@model CfModel
+@{
+    ViewData["Title"] = "Projects";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Clients Not Found!
+    </div>
+    return;
+}
+
+<div class="container pt-4 project-container">
+    @*  Search Filtering*@
+    <div class="row project-row">
+
+        <form class="form shadow bg-white rounded p-3 search-projects-form">
+              
+                <div class="form-group mx-sm-3 mb-1 d-inline-flex search-projects-icon">
+                     
+                    <i style="font-size:1.5em;" class="fa fa-sliders" aria-hidden="true"></i>
+                    <h2 style="font-size:1.2em; font-weight:600; margin-left:1em;">Search Filters</h2>
+                </div>
+                <div class="form-group mx-sm-3 mb-1 search-projects-title-input">
+                     
+                    <label style="font-weight:500;">Title</label>
+                    <input type="text" class="form-control" id="inputSearchTitle" placeholder="Enter your Title">
+                </div>
+                <div class="form-group mx-sm-3 mb-1 search-projects-desc-input">
+                     
+                    <label style="font-weight:500;">Description</label>
+                    <input type="text" class="form-control" id="inputSearchDescription" placeholder="Enter your Description">
+                </div>
+                <div class="form-group mx-sm-3 mb-1 search-projects-cat-input">
+                     
+                    <label for="exampleFormControlSelect1" style="font-weight:500;">Category</label>
+                    <select class="form-control" id="searchControlSelectCategory">
+                        <option> </option>
+                        @foreach (var item in Enum.GetValues(typeof(CrowdFundT2.Core.ProjectCategory)))
+                        {
+                            var y = (int)item;
+                            <option value="@y">@item</option>
+                        }
+                    </select>
+                </div>
+                <div class="search-projects-search-btn" style="text-align:center;">
+                    <button type="button" class="btn btn-outline-success mr-sm-1" id="SearchProjectsByFilters" style="justify-content:center;">Search</button>
+                </div>
+                
+
+        </form>
+
+    </div>
+
+    @*  Project Page*@
+    <div class="row mt-1 project-page-row">
+        @foreach (var item in Model.Projects)
+        {
+            <div class="col-xs-12 col-md-6 col-lg-5 col-xl-4 project-page-col">
+                <div class="card project-card project-page-card">
+                    <div class="card-body project-card-body" style="background-image: url('@item.Photos');">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-subtitle">Description: @item.Description </p>
+                    </div>
+                    @{var prog = ((decimal)item.Earnings / (decimal)item.ProjectCost) * 100;
+                    }
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Category: @item.Category</li>
+                        <li class="list-group-item">Packages: @item.Packages.Count()</li>
+                        <li class="list-group-item">Progress: @Math.Round(prog, 2)%</li>
+                        <li class="list-group-item">Total Earnings: @item.ProjectCost</li>
+                    </ul>
+                    <div class="card-body">
+
+                        <button class="btn project-btn">
+                            <a class="card-link project-card-link" href="@Url.Action("Details","Project",new { id=item.ProjectId})">Details</a>
+                        </button>
+
+                        <button class="btn project-btn">
+                            <a class="card-link project-card-link" href="@Url.Action("Edit","Project",new { id=item.ProjectId})">Edit</a>
+                        </button>
+                    </div>
+
+                    <div class="list-group-item">
+                        <small>
+                            Created by @item.Client.Firstname
+                            at: @item.Created
+                        </small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,169 @@
+﻿@model CrowdFundT2.Core.Model.Project
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Project Not Found!
+    </div>
+    return;
+}
+
+
+@* PROJECT DETAILS *@
+
+<div class="card mb-3 details-card">
+    <div class="row no-gutters details-row">
+        <div class="col-12 col-md-10 col-ld-8 col-xl-6 mb-sm-1 details-col">
+            <div class="details-project-card-style">
+                <div class="card-body details-project-card-body" style="background-image: url('@Model.Photos')">
+                </div>
+            </div>
+            <div class="details-project-card-style-1">
+                <div class="card-body custom-details-card-body">
+                    <h5 class="card-title">Title: @Model.Title</h5>
+                    <p class="card-text">Description: @Model.Description</p>
+                    <p class="card-text">Packages: @Model.Packages.Count</p>
+                    <p class="card-text">Goal: @Model.ProjectCost €</p>
+                    @{var prog = ((decimal)Model.Earnings / (decimal)Model.ProjectCost) * 100;
+                        var progress = prog.ToString();
+                        progress = progress + '%';
+                    }
+                    <p class="card-text">Progress: </p>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @progress;" aria-valuenow="@Model.Progress" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    @{
+                        if (prog > 100)
+                        {
+                            <small class="card-text">Over Achievement: @Math.Round(prog, 2)%</small>
+                            prog = 100;
+                        }
+                    }
+                    <p class="card-text" style=" margin-top: 1rem;">Earnings: @Model.Earnings €</p>
+                    <p class="card-text">Creator: @Model.Client.Firstname ID: @Model.ClientId</p>
+                </div>
+                <button class="btn project-details-btn">
+                    <a class="m-2 btn-text-style" href="@Url.Action("Edit", "Project", new { id = Model.ProjectId })">
+                        Edit
+                    </a>
+                </button>
+
+                <!-- Button trigger modal -->
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#exampleModal" style=" margin-top: .2rem; border-color: green; background-color: transparent">
+                    <a class="m-2" style="color:green; text-decoration:none" href="#">
+                        Back it
+                    </a>
+                </button>
+                <button class="btn btn-success" type="button" style=" margin-top: .2rem; border-color: green; background-color: transparent">
+                    <a class="m-2" style="color:green; text-decoration:none" href="@Url.Action("AddPackages", "Project", new { projectId = Model.ProjectId, numberOfPackages = 1})">
+                        Add Package
+                    </a>
+                </button>
+                <div class="alert alert-success js-success-alert" role="alert">
+                    Investment was created successsfully
+                </div>
+
+                <div class="alert alert-danger js-danger-alert" role="alert">
+                    Investment could not be created
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+@* Modal *@
+@* Packages *@
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="custom-modal-body">Back this project</div>
+                <div>
+                    <form method="post" class="js-invest-withoutpack-form">
+                        <div class="custom-modal-style">
+                            Make an Investment!
+                        </div>
+                        <input class="js-ProjectId" type="hidden" value="@Model.ProjectId" />
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control js-invest-wo-pack-cid" placeholder="ClientId">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="inputPassword2" class="sr-only">Invest without package</label>
+                            <input type="text" class="form-control js-invest-wo-pack-amount" placeholder="100 $">
+                        </div>
+                        <div class="mb-2 custom-modal-style-2">
+                            Contributions are not associated with packages
+                        </div>
+                        <button type="button" class="btn btn-success mb-2 js-submit-invest-withoutpack">Invest</button>
+                    </form>
+                </div>
+
+                <div class="shadow bg-white rounded custom-modal-shadow">
+                    <div id="carouselExampleControls" class=" carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @{if (Model.Packages.Count() > 0)
+                                {
+                                    <input class="js-packages" type="hidden" value="@Model.Packages.Count()" />
+                                    var i = 1;
+                                    var x = Model.Packages.Take(1).SingleOrDefault();
+                                    <div class="carousel-item active">
+                                        <div class="d-block w-100 main-car-banner custom-modal-banner" style=" background-image: url('https://miro.medium.com/max/1224/1*GS0ohg3qm14E4Ya7fljicw.jpeg')">
+                                            <div class="carousel-caption d-block custom-modal-carousel">
+                                                <input class="js-PackId_@i" type="hidden" value="@x.PackageId" />
+                                                <h5 style="color:#000000">@x.Description</h5>
+                                                <p style="color:#000000" class="rewardpack_@i">@x.Reward €</p>
+                                                <div style="text-align:center; margin:auto;">
+                                                    <button class="btn btn-success js-submit-invest-withpack_@i">Get this pack</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    i = 2;
+                                    foreach (var item in Model.Packages.Skip(1).ToList())
+                                    {
+                                        <div class="carousel-item">
+                                            <div class="d-block w-100 main-car-banner custom-modal-banner" style="background-image: url('https://miro.medium.com/max/1224/1*GS0ohg3qm14E4Ya7fljicw.jpeg')">
+                                                <div class="carousel-caption d-block custom-modal-carousel">
+                                                    <input class="js-PackId_@i" type="hidden" value="@item.PackageId" />
+                                                    <h5 class="custom-modal-description">@item.Description</h5>
+                                                    <p class="custom-modal-reward rewardpack_@i">@item.Reward</p>
+                                                    <div class="custom-modal-style-3">
+                                                        <button class="btn btn-success js-submit-invest-withpack_@i">Get this pack</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        i++;
+                                    }
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(90%);"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(90%);"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                } }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/sliding_packages.js"></script>
+}

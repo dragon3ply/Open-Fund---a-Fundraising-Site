@@ -1,0 +1,54 @@
+﻿@using CrowdFundT2.Core.Model
+
+@model CfModel
+@{
+    ViewData["Title"] = "Client";
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        Clients Not Found!
+    </div>
+    return;
+}
+
+
+@* Search All Clients *@
+
+    <div class="row client-row">
+        @foreach (var item in Model.Client)
+        {
+        <div class="col-xs-12 col-sm-6 col-lg-4 client-col">
+            <div class="card client-card">
+                <img src="@Url.Content("~/images/user.png")" asp-append-version="true"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Firstname - @item.Lastname</h5>
+                    <p class="card-subtitle">@@Email: @item.Email </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@item.Phone</li>
+                    <li class="list-group-item">Projects: @item.Projects.Count()</li>
+                    <li class="list-group-item">Backs: @item.InvestedProjects.Count</li>
+                </ul>
+                <div class="card-body d-inline-flex client-card-body ">
+
+                    <button class="btn client-btn ">
+                        <a class="nav-link client-link" href="@Url.Action("Details", "Client", new { id = item.ClientId })">
+                            Details
+                        </a>
+                    </button>
+
+                    <button class="btn client-btn">
+                        <a class="nav-link client-link" href="@Url.Action("Edit", "Client", new { id = item.ClientId })">
+                            Edit
+                        </a>
+                    </button>
+
+                </div>
+                <div class="list-group-item"><small>Created at: @item.Created</small></div>
+            </div>
+        </div>
+        }
+    </div>
